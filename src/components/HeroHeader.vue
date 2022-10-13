@@ -1,18 +1,15 @@
 <script lang="ts">
-import NavigationBar from "./NavigationBar.vue";
 import SubscribeToMail from "./SubscribeToMail.vue";
 
 export default {
   name: "HeroHeader",
   components: {
-    NavigationBar: NavigationBar,
     SubscribeToMail: SubscribeToMail,
   },
 };
 </script>
 
 <template>
-  <navigation-bar></navigation-bar>
   <div
     class="h-[80vh] flex items-center justify-center relative z-20 bg-transparent border-b-8 border-slate-600"
   >

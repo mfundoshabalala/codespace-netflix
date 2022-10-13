@@ -1,9 +1,9 @@
 <script lang="ts">
 export default {
-  name: "HomeView",
+  name: "LoginView",
 };
 </script>
 
 <template>
-  <main>Home Page</main>
+  <h1>Login</h1>
 </template>

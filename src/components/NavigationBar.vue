@@ -1,9 +1,9 @@
 <template>
   <nav>
-    <a>
+    <router-link to="/">
       <img src="../assets/netflix-logo.svg" alt="Netflix" />
-    </a>
-    <button>Sign In</button>
+    </router-link>
+    <router-link to="/login" class="button"> Sign In </router-link>
   </nav>
 </template>
 
@@ -16,8 +16,8 @@ img {
   @apply sm:w-52 max-h-16;
 }
 
-button {
-  @apply bg-red-600 px-4 py-1.5 rounded-sm;
+.button {
+  @apply bg-red-600 px-4 py-1.5 rounded-sm mx-4;
 }
 </style>
 
