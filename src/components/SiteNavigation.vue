@@ -1,7 +1,7 @@
 <template>
   <nav>
     <!-- site branding -->
-    <router-link to="/landing">
+    <router-link to="/">
       <img src="../assets/images/netflix-logo.svg" alt="Netflix" />
     </router-link>
     <!-- site auth link -->
@@ -16,7 +16,7 @@ import { RouterLink } from "vue-router";
 <style lang="scss" scoped>
 nav {
   // nav wrapper styling
-  @apply shadow-md bg-transparent z-50;
+  @apply shadow-sm bg-transparent z-50 py-2 px-8;
   @apply flex flex-row justify-between items-center;
   // brand styling
   a img {
