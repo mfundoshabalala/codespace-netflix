@@ -1,16 +1,27 @@
 <template>
   <nav>
     <!-- site branding -->
-    <router-link to="/">
+    <router-link to="/landing">
       <img src="../assets/images/netflix-logo.svg" alt="Netflix" />
     </router-link>
+    <div v-if="isLoggedIn">
+      <ul>
+        <li><router-link to="/">Home</router-link></li>
+      </ul>
+    </div>
     <!-- site auth link -->
-    <router-link to="/login" class="button">Sign in</router-link>
+    <div v-if="isLoggedIn">
+      <router-link to="/login" class="button">Sign in</router-link>
+    </div>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
+
+const router = useRouter();
+let currentPath = router.options.history.state.current;
+let isLoggedIn = currentPath !== "/login";
 </script>
 
 <style lang="scss" scoped>
@@ -25,6 +36,10 @@ nav {
   // auth button styling
   a.button {
     @apply bg-red-600 px-4 py-1.5 rounded-sm mx-4;
+  }
+
+  ul {
+    @apply flex items-center flex-1;
   }
 }
 </style>
