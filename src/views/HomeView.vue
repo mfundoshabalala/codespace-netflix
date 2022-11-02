@@ -30,21 +30,58 @@
   </section>
 </template>
 
-<script lang="ts" setup>
-import { ref, onMounted, computed } from "vue";
-import { useStore } from "vuex";
+<script lang="ts">
+export interface Movie {
+  id: string;
+  name: string;
+  image: string;
+  release_date: string;
+  description: string;
+  genres: [{ name: string }];
+  actors: [{ first_name: string; last_name: string }];
+}
 
-const store = useStore();
+export interface Movies {
+  movies: Movie[];
+}
 
-const msg = ref("Welcome to my Vuex Store");
+import { useRouter } from "vue-router";
+import { auth } from "@/firebaseConfig";
+import { onMounted, computed } from "vue";
+import authStore from "@/stores/auth.store";
+import { useMovieStore } from "../stores/movies.store";
 
-const movies = computed(() => {
-  return store.state.movies;
-});
+export default {
+  name: "HomeView",
+  components: {},
+  setup() {
+    const movieStore = useMovieStore();
+    const router = useRouter();
 
-onMounted(() => {
-  store.dispatch("fetchMovies");
-});
+    auth.onAuthStateChanged((user: any) => {
+      authStore.dispatch("fetchUser", user);
+    });
+
+    const user = computed(() => {
+      return authStore.getters.user;
+    });
+
+    const signOut = async () => {
+      await authStore.dispatch("logOut");
+      router.push("/");
+    };
+
+    const movies = computed(() => {
+      return movieStore.movies as Movie[];
+    });
+
+    onMounted(() => {
+      movieStore.fetchMovies();
+    });
+
+    return { user, signOut, movies };
+  },
+};
 </script>
 
 <style lang="scss" scoped>

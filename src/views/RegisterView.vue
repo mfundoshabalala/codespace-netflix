@@ -1,9 +1,18 @@
 <template>
   <div class="form-container">
-    <form action="" @submit.prevent="Login">
-      <h1>Sign in</h1>
+    <form action="" @submit.prevent="Register">
+      <h1>Welcome back! Joining Netflix is easy.</h1>
+      <h2>Enter your password and you'll be watching in no time.</h2>
       <form-input
-        value
+        required
+        autofocus
+        id="name"
+        type="text"
+        label="name"
+        v-model="name"
+        placeholder="Email or phone number"
+      />
+      <form-input
         required
         autofocus
         id="email"
@@ -20,19 +29,10 @@
         v-model="password"
         placeholder="Password"
       />
-      <button type="submit">Sign in</button>
-      <div class="flex justify-between">
-        <div class="flex items-center gap-x-2">
-          <input type="checkbox" name="remember" id="remember" />
-          <label for="remember">Remember me?</label>
-        </div>
-        <router-link to="">Need help?</router-link>
-      </div>
+      <button type="submit">Sign up</button>
       <div class="flex items-center h-24 text-lg text-slate-400">
-        New to Netflix?
-        <router-link to="/register" class="pl-1 text-white"
-          >Sign up now</router-link
-        >.
+        Already have an account?
+        <router-link to="/login" class="pl-1 text-white">Sign in</router-link>.
       </div>
     </form>
   </div>
@@ -43,20 +43,20 @@ import FormInput from "@/components/shared/FormInput.vue";
 import authStore from "@/stores/auth.store";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-
 export default {
-  name: "LoginView",
+  name: "RegisterView",
   components: { FormInput },
   setup() {
+    const name = ref("");
     const email = ref("");
     const password = ref("");
     const error = ref(null);
-
     const router = useRouter();
 
-    const Login = async () => {
+    const Register = async () => {
       try {
-        await authStore.dispatch("logIn", {
+        await authStore.dispatch("register", {
+          name: name.value,
           email: email.value,
           password: password.value,
         });
@@ -66,7 +66,7 @@ export default {
       }
     };
 
-    return { Login, email, password, error };
+    return { Register, name, email, password, error };
   },
 };
 </script>
